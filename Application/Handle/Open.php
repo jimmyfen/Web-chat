@@ -22,7 +22,7 @@ class Open extends Common
 			}
 		}
 
-		$server->push($request->fd, json_encode([ 'command' => 'INIT', 'content' => $fd ], JSON_UNESCAPED_UNICODE));
+		$server->push($request->fd, json_encode([ 'command' => 'INIT', 'content' => [ 'fds' => $fd, 'fd' => $request->fd, 'name' => $name ] ], JSON_UNESCAPED_UNICODE));
 	}
 
 	private static function getRandomName() 
@@ -58,13 +58,13 @@ class Open extends Common
 			'清妍', '诗悦', '嘉乐', '晨涵', '天赫', '玥傲', '佳昊', '天昊', '萌萌', '若萌'
 		);
 	
-		$firstLength = substr($firstNames);
-		$secondLength = substr($secondNames);
+		$firstLength = count($firstNames);
+		$secondLength = count($secondNames);
 	
 		$i = rand(0, $firstLength - 1);
 		$j = rand(0, $secondLength - 1);
 	
-		$name = $firstNames[$i] + $secondNames[$j];
+		$name = $firstNames[$i] . $secondNames[$j];
 	
 		return $name;	
 	}

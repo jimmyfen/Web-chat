@@ -5,7 +5,7 @@ use App\Config;
 
 class Message
 {
-	protected static $command = [ 'MESSAGE', 'ADD_USER', 'CHANGE_NAME', 'USER_LIST', 'INIT' ];
+	protected static $command = [ 'MESSAGE', 'ADD_USER', 'CHANGE_NAME', 'USER_LIST', 'INIT', 'DELETE_USER' ];
 
 	static function build($message)
 	{

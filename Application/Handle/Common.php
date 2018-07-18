@@ -8,7 +8,7 @@ class Common
 {
 	protected $fd;
 
-	public static function checkConnect($server, int $fd = 0)
+	public static function checkConnect($server, $fd = 0)
 	{
 		$conf = Config::getInstance()->getConf('REDIS_SERVER');
 		Fd::connect($conf['SERVICE_KEY']);
@@ -26,7 +26,7 @@ class Common
 		Fd::hSet($allFd);
 	}
 
-	public static function IteratorToArray($connections, int $fd)
+	public static function IteratorToArray($connections, $fd)
 	{
 		$result = [];
 		foreach ( $connections as $_fd ) {

@@ -13,7 +13,12 @@ class Close extends Common
 		$fds = Fd::hGet();
 
 		if ( isset($fds[$fd]) ) {
+			$name = $fds[$fd]['name'];
 			unset($fds[$fd]);
+		}
+
+		foreach ($server->connections as $_fd) {
+			$server->push($_fd, json_encode([ 'command' => 'DELETE_USER', 'content' => [ 'fd' => $fd, 'name' => $name ] ], JSON_UNESCAPED_UNICODE));
 		}
 
 		Fd::hSet($fds);
