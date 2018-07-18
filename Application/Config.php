@@ -12,7 +12,7 @@ class Config
 		$this->config = require($config_file);
 	}
 
-	public static function getInstance() : Config
+	public static function getInstance()
 	{
 		if ( !Static::$instance ) {
 			Static::$instance = new Static;
@@ -21,7 +21,7 @@ class Config
 		return Static::$instance;
 	}
 
-	public function setConf(array $config = []) : void
+	public function setConf(array $config = [])
 	{
 		$this->config = array_merge($this->config, $config);
 	}
@@ -31,7 +31,7 @@ class Config
 	 * @param  string $key [description]
 	 * @return [type]      [description]
 	 */
-	public function getConf(string $key = '')
+	public function getConf($key = '')
 	{
 		if ( $key === '' ) {
 			return $this->config;
