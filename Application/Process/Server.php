@@ -4,7 +4,6 @@ namespace App\Process;
 use App\Handle\Open;
 use App\Handle\Message;
 use App\Handle\Close;
-use App\Model\Db;
 use App\Utility\Log;
 
 class Server
@@ -16,7 +15,6 @@ class Server
 	{
 		$this->server = new \swoole_websocket_server($conf['HOST'], $conf['PORT']);
 		$this->server->set($conf['SETTING']);
-		$this->db = new Db('MAIN_DB');
 
 		$this->server->on('open', function($server, $request){
 			Log::consoleBegin();
