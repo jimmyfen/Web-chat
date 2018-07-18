@@ -1,0 +1,13 @@
+{
+    "name": "swoole-web-im",
+    "description": "web chat application",
+    "autoload": {
+        "psr-4": {
+            "App\\": "Application/"
+        }
+    },
+
+    "require": {
+        "joshcam/mysqli-database-class": "dev-master"
+    }
+}
