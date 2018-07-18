@@ -3,7 +3,7 @@ namespace App\Utility;
 
 class Curl
 {
-	static function get($url, array $params = []) : ?string
+	static function get($url, array $params = [])
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -23,7 +23,7 @@ class Curl
 		return null;
 	}
 
-	static function post($url, $data, array $params = []) : ?string
+	static function post($url, $data, array $params = [])
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);

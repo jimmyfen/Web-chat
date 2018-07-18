@@ -17,7 +17,7 @@ class Log
 	CONST KEYWORDS_ANSWER_TEMPLATE = '匹配到关键字回复: [keywords: {$keywords}] [answer: {$answer}]';
 	CONST FORCE_LOGOUT_TEMPLATE = '后台强制下线客服: [uniacid: {$uniacid}] [account: {$account}]';
 
-	static function write(array $data, string $template = '') : void
+	static function write(array $data, $template = '')
 	{
 		$file = ROOT_PATH . '/Logs/' . date('Ym') . '.log';
 		file_put_contents($file, '[' . date('Y-m-d H:i:s') . ']  ' . preg_replace_callback('/\{\$(\w+)\}/', function ($matches) use ($data) {
@@ -25,12 +25,12 @@ class Log
 		}, $template) . "\r\n", FILE_APPEND);
 	}
 
-	static function consoleBegin() : void
+	static function consoleBegin()
 	{
 		ob_start();
 	}
 
-	static function consoleEnd(string $type = 'open') : void
+	static function consoleEnd($type = 'open')
 	{
 		$file = ROOT_PATH . '/Logs/console.log';
 		$contents = ob_get_contents();
