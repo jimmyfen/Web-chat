@@ -6,7 +6,7 @@ use App\Utility\Message as MessageParse;
 
 class Message extends Common
 {
-	public static function hook($server, $frame, Db $db)
+	public static function hook($server, $frame)
 	{
 		Static::checkConnect($server);
 
