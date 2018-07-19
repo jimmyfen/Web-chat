@@ -16,8 +16,4 @@ Abstract class Redis
 			Static::$connect->pconnect('127.0.0.1', 6379);
 		}
 	}
-
-	Abstract static function hGet();
-
-	Abstract static function hSet($value);
 }

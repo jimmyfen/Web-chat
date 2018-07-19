@@ -5,7 +5,7 @@ use App\Config;
 
 class Message
 {
-	protected static $command = [ 'MESSAGE', 'ADD_USER', 'CHANGE_NAME', 'USER_LIST', 'INIT', 'DELETE_USER' ];
+	protected static $command = [ 'MESSAGE', 'ADD_USER', 'CHANGE_NAME', 'USER_LIST', 'INIT', 'DELETE_USER', 'IMAGE', 'IMOJI' ];
 
 	static function build($message)
 	{
@@ -15,7 +15,7 @@ class Message
 			return null;
 		}
 
-		if ( !is_string($message['content']) ) {
+		if ( !is_string($message['content']) && !is_numeric($message['content']) ) {
 			return null;
 		}
 
@@ -23,6 +23,24 @@ class Message
 			$message['command'] = 'MESSAGE';
 		}
 
-		return [ 'command' => $message['command'], 'content' => htmlspecialchars($message['content']), 'time' => date('Y-m-d H:i:s') ];
+		if ( $message['command'] === 'MESSAGE' ) {
+			$message['content'] = htmlspecialchars($message['content']);
+		}
+
+		if ( $message['command'] === 'IMOJI' ) {
+			if ( !is_int($message['content']) || $message['content'] < 0 || $message['content'] > 17 ) {
+				$message['content'] = htmlspecialchars($message['content']);
+			} else {
+				$message['content'] = '<img src="http://chat.fzhang.cn/statics/emoji/' . $message['content'] . '.png" />';
+			}
+		}
+
+		if ( $message['command'] === 'IMAGE' ) {
+			if ( !strpos($message['content'], ',') || !base64_decode(substr($message['content'], strpos($message['content'], ',') + 1, -4)) ) {
+				$message['content'] = htmlspecialchars($message['content']);
+			}
+		}
+
+		return [ 'command' => $message['command'], 'content' => $message['content'], 'time' => date('Y-m-d H:i:s') ];
 	}
 }
