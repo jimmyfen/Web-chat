@@ -22,7 +22,7 @@ class Open extends Common
 			}
 		}
 
-		$server->push($request->fd, json_encode([ 'command' => 'INIT', 'content' => [ 'fds' => $fd, 'fd' => $request->fd, 'name' => $name ] ], JSON_UNESCAPED_UNICODE));
+		$server->push($request->fd, json_encode([ 'command' => 'INIT', 'content' => [ 'fds' => array_keys($fd), 'list' => array_values($fd), 'fd' => $request->fd, 'name' => $name ] ], JSON_UNESCAPED_UNICODE));
 	}
 
 	private static function getRandomName() 
