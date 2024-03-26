@@ -17,7 +17,7 @@ class ServerManage
 		$this->server = new Server($conf);
 	}
 
-	public static function getInstance(array $options) : ServerManage
+	public static function getInstance(array $options) 
 	{
 		if ( !isset(Static::$manager) ) {
 			Static::$manager = new self($options);

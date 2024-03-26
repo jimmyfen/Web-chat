@@ -10,10 +10,10 @@ class Message extends Common
 	{
 		Static::checkConnect($server);
 
-		$message = MessageParse::parse($frame->data);  // 解析消息
+		$message = MessageParse::build($frame->data);  // 解析消息
 
 		if ( $message ) {
-			if ( $message['command'] === 'MESSAGE' ) {
+			if ( $message['command'] === 'MESSAGE' || $message['command'] === 'IMAGE' || $message['command'] === 'IMOJI' ) {
 				$message['fd'] = $frame->fd;
 				foreach ( $server->connections as $fd ) {
 					if ( $fd !== $frame->fd ) {
@@ -28,12 +28,15 @@ class Message extends Common
 				$fd = Fd::hGet();
 
 				if ( isset($fd[$frame->fd]) ) {
+					$originName = $fd[$frame->fd]['name'];
 					$fd[$frame->fd] = [ 'name' => $message['content'] ];
 					Fd::hSet($fd);
 				}
 
-				foreach ( $server->connections as $fd ) {
-					$server->push($fd, json_encode($fd, JSON_UNESCAPED_UNICODE));
+				foreach ( $server->connections as $_fd ) {
+					if ( $_fd !== $frame->fd ) {
+						$server->push($_fd, json_encode([ 'command' => 'CHANGE_NAME', 'content' =>[ 'fd' => $frame->fd, 'name' => $message['content'], 'originName' => $originName ] ], JSON_UNESCAPED_UNICODE));
+					}
 				}
 
 				return;
@@ -41,7 +44,7 @@ class Message extends Common
 
 		}
 			
-		$server->push($frame->fd, 'unkown message');
+		$server->push($frame->fd, json_encode([ 'command' => 'ERROR', 'content' => 'unkown message' ]));
 		
 	}
 

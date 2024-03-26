@@ -8,6 +8,8 @@ use App\Utility\Log;
 
 class Server
 {
+	protected $server;
+
 	public function __construct($conf)
 	{
 		$this->server = new \swoole_websocket_server($conf['HOST'], $conf['PORT']);
@@ -30,5 +32,10 @@ class Server
 			Close::hook($server, $fd);
 			Log::consoleEnd('close');
 		});
+	}
+
+	public function getServer()
+	{
+		return $this->server;
 	}
 }
